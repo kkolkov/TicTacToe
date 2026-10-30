@@ -1,14 +1,22 @@
 public class Game {
+    private static Game instance;
     private final Board board;
     private final Player player1;
     private final Player player2;
     private Player currentPlayer;
 
-    public Game(Board board, Player player1, Player player2) {
+    private Game(Board board, Player player1, Player player2) {
         this.board = board;
         this.player1 = player1;
         this.player2 = player2;
         currentPlayer = player1;
+    }
+
+    public static synchronized Game getInstance(Board board, Player player1, Player player2) {
+        if (instance == null) {
+            instance = new Game(board, player1, player2);
+        }
+        return instance;
     }
 
     public void startGame() {
